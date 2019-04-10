@@ -1,6 +1,4 @@
 " Vundle设置，先下载
-" 左下角显示当前vim模式
-set showmode
 " $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -22,6 +20,8 @@ Plugin 'Lokaltog/vim-powerline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/syntastic'
 Plugin 'Yggdroot/indentLine'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'taglist.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -35,21 +35,39 @@ call vundle#end()            " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 "
-syntax on
+syntax on       "语法高亮
 filetype plugin indent on
 colorscheme monokai
 set t_Co=256
-set nu
+set showmode    " 左下角显示当前vim模式
+set number      " 显示行号
+set hlsearch    " 高亮search命中的文本
+set incsearch   " 打开增量搜索模式,随着键入即时搜索
+set ignorecase  " 搜索时忽略大小写
+set smartcase   " 有一个或以上大写字母时仍大小写敏感
 
+" fugitive、powerline设置状态行
+set statusline+=%{fugitive#statusline()}    " 命令行（在状态行下）的高度，默认为1，这里是2
+set laststatus=2    " Always show the status line - use 2 lines for the status bar
+set showmatch       " 括号配对情况, 跳转并高亮一下匹配的括号
+set matchtime=2     " How many tenths of a second to blink when matching brackets
+set cursorline      " 突出显示当前行
+set autoindent      " 打开自动缩进
+set tabstop=4       " 设置Tab键的宽度
+set shiftwidth=4    " 每一次缩进对应的空格数
+set softtabstop=4   " 按退格键时可以一次删掉 4 个空格
+set expandtab       " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
+set shiftround      " 缩进时，取整 use multiple of shiftwidth when indenting with '<' and '>'
+set encoding=utf-8  " 设置新文件的编码为 UTF-8
+set fdm=indent      " 设置代码折叠方式
 
-" 高亮search命中的文本
-set hlsearch
-" 打开增量搜索模式,随着键入即时搜索
-set incsearch
-" 搜索时忽略大小写
-set ignorecase
-" 有一个或以上大写字母时仍大小写敏感
-set smartcase
+" 自动加载
+" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 " NERDTree设置
 "打开vim时如果没有文件自动打开NERDTree
@@ -60,14 +78,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd vimenter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
 
-" fugitive、powerline设置状态行
-" 命令行（在状态行下）的高度，默认为1，这里是2
-set statusline+=%{fugitive#statusline()}
-" Always show the status line - use 2 lines for the status bar
-set laststatus=2
-" 括号配对情况, 跳转并高亮一下匹配的括号
-set showmatch
-" How many tenths of a second to blink when matching brackets
-set matchtime=2
-" 突出显示当前行
-set cursorline
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'   "设定系统中ctags程序的位置
+let Tlist_Show_One_File = 1                    "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Exit_OnlyWindow = 1                  "如果taglist窗口是最后一个窗口，则退出vim
