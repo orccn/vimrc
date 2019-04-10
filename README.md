@@ -1,3 +1,6 @@
+#### 目录
+- [安装Vundle](#安装vundle)
+- [遇到的问题及解决办法(MacOS)](#遇到的问题及解决办法macos)
 
 #### **安装[Vundle](https://github.com/VundleVim/Vundle.vim)**
 
