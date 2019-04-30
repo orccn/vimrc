@@ -77,6 +77,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "打开vim时自动打开NERDTree
 autocmd vimenter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
+" 若使用Vim打开某个文件，则自动打开NERDTree的同时，将焦点也转移至新文件中
+autocmd VimEnter * if argc() | wincmd p | endif
 
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'   "设定系统中ctags程序的位置
 let Tlist_Show_One_File = 1                    "不同时显示多个文件的tag，只显示当前文件的
